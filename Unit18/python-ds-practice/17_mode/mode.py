@@ -11,3 +11,16 @@ def mode(nums):
         >>> mode([2, 2, 3, 3, 2])
         2
     """
+
+    dic = {}
+    num_set = set(nums)
+    for num in num_set:
+        dic[num] = nums.count(num)
+
+    result = 0
+    common_num = None
+    for each_num in num_set:
+        if dic[each_num]> result:
+            result = dic[each_num]
+            common_num = each_num
+    return common_num

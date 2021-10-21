@@ -7,3 +7,8 @@ def reverse_string(phrase):
         >>> reverse_string('sauce')
         'ecuas'
     """
+    # return phrase[::-1]
+    lst = list(phrase)
+    lst.reverse()
+    return ''.join(lst)
+# What's wrong with join function?
