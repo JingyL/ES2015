@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %}TITLE GOES HERE{% endblock %}</title>
+    <link rel="stylesheet" href="/static/app.css">
+    <script src="http://unpkg.com/jquery"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="/">Home</a>
+        <a href="/form">Greet</a>
+        <a href="/form-2">Greet2</a>
+        <a href="/lucky">Lucky</a>
+        <a href="/hello">Hello</a>
+    </nav>
+    <h1>Our Site</h1>
+    <main id="content">
+        {% block content %}BODY CONTENT GOES HERE{% endblock %}
+        <footer>Copyright by Whiskey.</footer>
+    </main>
+
+</body>
+
+</html>
