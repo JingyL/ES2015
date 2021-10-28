@@ -6,8 +6,8 @@ Select Story
 {% block content %}
   <h1>Select Your Story</h1>
   <form action="/questions">
-  <label for="story_id">Select your stories</label>
-  <select name="story_id">
+  <label for="stories">Select your stories</label>
+  <select name="stories">
       {% for each_story in stories %}
       <option value="{{each_story.id}}">{{each_story.title}}</option>
       {% endfor %}
