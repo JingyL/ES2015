@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+Homepage
+{% endblock %}
+
+{% block content %}
+  <form action = "/story">
+      {% for prompt in prompts%}
+      <div class="prompts-form">
+      <label for="{{prompt}}">{{prompt}}</label>
+      <input type="text" placeholder="add a {{prompt}}" name="{{prompt}}">
+      </div>
+      {% endfor %}
+      <button>Submit</button>
+  </form>
+  <!-- <form action = "story.html">
+      <label for="place">Place</label>
+      <input type="text" placeholder="placename" name="place">
+      <label for="noun">Noun</label>
+      <input type="text" placeholder="add a noun" name="noun">
+      <label for="verb">Verb</label>
+      <input type="text" placeholder="add a verb" name="verb">
+      <label for="adjective">Adjective</label>
+      <input type="text" placeholder="add a adjective" name="adjective">
+      <label for="plural">Plural_noun</label>
+      <input type="text" placeholder="add plural" name="plural">
+      <button>Submit</button>
+  </form> -->
+
+
+{% endblock %}
