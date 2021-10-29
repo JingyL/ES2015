@@ -10,22 +10,9 @@
 </head>
 
 <body>
-  <nav class="navbar">
-    <a href="/">Home</a>
-    <a href="/movies">Movies</a>
-  </nav>
-
   <main id="content">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <section class="messages">
-      {% for category,msg in messages %}
-      <p class="{{category}}">{{msg}}</p>
-      {% endfor  %}
-    </section>
-    {% endif %}
-    {% endwith %}
-    {% block content %} {% endblock %}
+    {% block content %} 
+    {% endblock %}
   </main>
 
   <script src="/static/app.js"></script>
