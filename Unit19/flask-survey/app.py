@@ -1,12 +1,12 @@
 from flask import Flask, request, render_template,  redirect, flash,  jsonify, session
 from surveys import satisfaction_survey
-from flask_debugtoolbar import DebugToolbarExtension
+# from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = "surveytask"
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-debug = DebugToolbarExtension(app)
+# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+# debug = DebugToolbarExtension(app)
 
 response=[]
 
@@ -14,7 +14,7 @@ response=[]
 def start_page():
      return render_template("start.html")
 
-@app.route('/questions', methods="POST")
+@app.route('/questions', methods=["POST"])
 def questions_start():
     number = len(response)
     return redirect(f"/questions/{number}")
@@ -29,15 +29,15 @@ def show_questions(number):
         q=questions[number].question,
         choices=questions[number].choices)
   
-@app.route("/answer", methods="POST")
+@app.route("/answer", methods=["POST"])
 def show_next_questions():
     choice = request.form["answer"]
     response.append(choice)
     number = len(response)
-    if len(response) < satisfaction_survey.questions:
+    if len(response) < len(satisfaction_survey.questions):
         return redirect(f"/questions/{number}")
     else:
-        return redirect ("complete.html")
+        return redirect ("/complete")
 
 
 @app.route("/complete")
