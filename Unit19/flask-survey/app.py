@@ -14,7 +14,7 @@ response=[]
 def start_page():
      return render_template("start.html")
 
-@app.route('/questions', method="POST")
+@app.route('/questions', methods="POST")
 def questions_start():
     number = len(response)
     return redirect(f"/questions/{number}")
@@ -29,9 +29,9 @@ def show_questions(number):
         q=questions[number].question,
         choices=questions[number].choices)
   
-@app.route("/answer", method="POST")
+@app.route("/answer", methods="POST")
 def show_next_questions():
-    choice = request.form["name"]
+    choice = request.form["answer"]
     response.append(choice)
     number = len(response)
     if len(response) < satisfaction_survey.questions:
