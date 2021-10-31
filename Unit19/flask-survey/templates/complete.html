@@ -4,5 +4,8 @@
 {% block content %}
 
 <h1>Survey Completed</h1>
-
+<h2>Your answer:</h2>
+    {% for ans in answers %}
+        <p>{{ans}}</p>
+    {% endfor %}
 {% endblock %}
