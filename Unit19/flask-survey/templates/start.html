@@ -3,9 +3,10 @@
 
 {% block content %}
 
-<h1>Start a Survey</h1>
+<h1>Start a Survey: {{title}}</h1>
+<h2>{{instruction}}</h2>
 <form action="/questions" method="POST">
-  <label for="survey">Wanna start?</label>
+  <label for="survey" name="surveycode" value="{{survey}}">Wanna start?</label>
   <button>Start</button>
 </form>
 {% endblock %}
