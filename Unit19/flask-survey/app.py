@@ -13,11 +13,14 @@ debug = DebugToolbarExtension(app)
 
 @app.route('/')
 def select_survey():
-    titles=surveys.items()
-    return render_template("start-f.html", titles=titles)
+    # get all surveys information and show each's key(code) and value(questions)
+    all_surveys=surveys.items()
+    return render_template("start-f.html", surveys=all_surveys)
 
 @app.route('/', methods=["POST"])
 def start_page():
+    #get informations of user selected survey and show title and instructions
+    # storage user selected survey code
     survey= request.form['surveytype']
     session['code'] = survey
     title=surveys[survey].title
@@ -26,14 +29,16 @@ def start_page():
 
 @app.route('/questions', methods=["POST"])
 def questions_start():
+    # redirect to each question page based on numbers and get users current response
     session['res'] = []
     response = session['res']
+    # get questions number
     number = len(response)
     return redirect(f"/questions/{number}")
 
 @app.route("/questions/<int:number>")
 def show_questions(number):
-    # survey= request.form['surveycode']
+    # show each questions's question and choice on the page
     response=session.get('res')
     code= session.get('code')
     questions = surveys[code].questions
@@ -49,6 +54,8 @@ def show_questions(number):
   
 @app.route("/answer", methods=["POST"])
 def show_next_questions():
+    # update user's response, redirect to next questions
+    # if completed, then redirect to complete page
     code= session.get('code')
     question= surveys[code]
     response=session['res']
@@ -64,8 +71,13 @@ def show_next_questions():
 
 @app.route("/complete")
 def complete():
+    # show user's answers in each question
+    code= session.get('code')
+    question= surveys[code]
     response=session['res']
-    return render_template("complete.html", answers = response)
+    length = range(len(response))
+    return render_template("complete.html", answers = response, 
+    q = question.questions, length = length)
 
 
 

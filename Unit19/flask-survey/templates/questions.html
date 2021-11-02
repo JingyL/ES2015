@@ -4,7 +4,7 @@
 {% block content %}
 
 <h1>Q{{number}}</h1>
-<form action="/answer" method="POST">
+<form action="/answer" method="POST" class="form-center">
     <h2>{{q}}</h2>
     {% for each_choice in choices %}
     <p><input type="radio" name="answer" value="{{ each_choice}}"> {{ each_choice }}</p>

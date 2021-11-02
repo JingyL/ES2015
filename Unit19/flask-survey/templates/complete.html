@@ -5,7 +5,7 @@
 
 <h1>Survey Completed</h1>
 <h2>Your answer:</h2>
-    {% for ans in answers %}
-        <p>{{ans}}</p>
-    {% endfor %}
+  {%  for i in length %}   
+        <p>{{q[i].question}} -- {{answers[i]}}</p>
+  {% endfor %}
 {% endblock %}

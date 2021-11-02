@@ -1,16 +1,22 @@
-{% extends 'base.html'  %}
+{% extends 'base.html' %}
 {% block title %}Start a Survey{% endblock %}
 
 {% block content %}
 
-<h1>Choose a survey</h1>
-<form method="POST">
-  <label for="survey">Choose Survey</label>
-  <select name="surveytype">
-    {% for code,title in titles %}
-      <option value="{{code}}">{{title.title}}</option>
-    {%  endfor %}
-  </select>
-  <button>Start</button>
+<h1>Survey</h1>
+<form method="POST" class="form-center">
+    <div class="form-style">
+        <label for="survey">Please choose a survey</label>
+    </div>
+    <div class="form-style">
+        <select name="surveytype">
+            {% for code,title in surveys %}
+            <option value="{{code}}">{{title.title}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-style"> 
+    <button>Start</button>
+    </div>
 </form>
 {% endblock %}
