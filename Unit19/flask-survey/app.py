@@ -21,11 +21,11 @@ def select_survey():
 def start_page():
     #get informations of user selected survey and show title and instructions
     # storage user selected survey code
-    survey= request.form['surveytype']
-    session['code'] = survey
-    title=surveys[survey].title
-    instruction=surveys[survey].instructions  
-    return render_template("start.html", survey=survey, title=title, instruction=instruction)
+    code= request.form['surveytype']
+    session['code'] = code
+    title=surveys[code].title
+    instruction=surveys[code].instructions  
+    return render_template("start.html", code=code, title=title, instruction=instruction)
 
 @app.route('/questions', methods=["POST"])
 def questions_start():
@@ -39,26 +39,26 @@ def questions_start():
 @app.route("/questions/<int:number>")
 def show_questions(number):
     # show each questions's question and choice on the page
-    response=session.get('res')
+    response= session['res']
     code= session.get('code')
     questions = surveys[code].questions
-    if number != len(response):
+    if number != len(response) and number < len(questions):
         flash("invalid question")
         return redirect(f"/questions/{len(response)}")
     else:
         return render_template(
-            "questions.html", number=number, 
-            questions=questions, 
-            q=questions[number].question,
-            choices=questions[number].choices)
+            "questions.html", number = number, 
+            questions = questions, 
+            q = questions[number].question,
+            choices = questions[number].choices)
   
 @app.route("/answer", methods=["POST"])
 def show_next_questions():
     # update user's response, redirect to next questions
     # if completed, then redirect to complete page
-    code= session.get('code')
-    question= surveys[code]
-    response=session['res']
+    code = session.get('code')
+    question = surveys[code]
+    response =session['res']
     choice = request.form["answer"]
     response.append(choice)
     session['res']= response
