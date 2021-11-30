@@ -2,10 +2,23 @@
 {% block title %}Post Page{% endblock %}
 
 {% block content %}
-<h1>{{post.title}}</h1>
-<p>{{post.created_at}}</p>
-<p>{{post.content}}</p>
+<div class="container">
+    <h1>{{post.title}}</h1>
+    <div class="center">
+        <p>Created at: {{post.created_at}}</p>
+        <p class="paragraph">{{post.content}}</p>
 
-<button><a href="/posts/{{post.id}}/edit">Edit</a></button>
-<button><a href="/">Go Homepage</a></button>
+        <h3>Tags:</h3>
+        {% for tag in tags %}
+        <!-- don't know why "/tags/{{tag.id}}" not work -->
+        <a href="/posts/tags/{{tag.id}}" class="btn btn-secondary btn-sm">{{tag.name}}</a>
+        {% endfor %}
+
+        <div>
+        <a href="/posts/{{post.id}}/edit" class="btn btn-light">Edit post</a>
+        <a href="/posts/{{post.id}}/delete" class="btn btn-danger">Delete post</a>
+        <a href="/" class="btn btn-dark">Go Homepage</a>
+    </div>
+    </div>
+</div>
 {% endblock %}

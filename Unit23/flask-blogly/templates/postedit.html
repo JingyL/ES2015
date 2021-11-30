@@ -3,19 +3,50 @@
 
 {% block content %}
 
-<h1>Edit Post</h1>
-<!-- form -->
-<form action="/posts/{{post.id}}/edited" method="POST">
-    <div>
-        <input type="text" name="title" placeholder="{{post.title}}" value="{{post.title}}">
-    </div>
-    <div>
-        <input type="text" name="content" placeholder="{{post.content}}" value="{{post.content}}">
-    </div>
-    <div>
-        <button>Edit</button>
-        <button>Cancel</button>
-    </div>
-</form>
+<div class="container">
+    <h1>Edit Post</h1>
+    <!-- form -->
+    <form action="/posts/{{post.id}}/edited" method="POST">
+        <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-6">
+                <label for="title" class="form-label">title</label>
+                <input type="text" class="form-control" name="title" placeholder="{{post.title}}" value="{{post.title}}">
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-6">
+                <label for="content" class="form-label">content</label>
+                <textarea class="form-control" name="content" placeholder="{{post.content}}"
+                    value="{{post.content}}">{{post.content}}</textarea>
+            </div>
+        </div>
+
+        <div class ="center">
+            <h4>Select tags:</h4>
+
+        </div>
+        {% for tag in tags %}
+        <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-6">
+        <div class="center">
+            <input type="checkbox" name="tags" value="{{tag.id}}">
+            <label for="{{tag.name}}">{{tag.name}}</label>
+        </div>
+    </div>
+    </div>
+        {% endfor %}
+
+        <div class="center">
+            <button class="btn btn-light">Edit</button>
+            <a href="/posts/{{post.id}}" class="btn btn-info">Cancel</a>
+        </div>
+    </form>
+</div>
 {% endblock %}
