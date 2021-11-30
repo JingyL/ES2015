@@ -1,0 +1,65 @@
+body{
+    background-color: #B7B7A4;
+}
+
+.container{
+    margin-top: 20px;
+}
+
+.grid{
+    margin-top: 20px;
+}
+
+
+#users{
+    background-color:#CB997E;
+}
+
+#tags{
+    background-color:#A5A58D;
+}
+
+.btn{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+h1{
+    font-family: 'Josefin Sans', sans-serif;
+    text-align: center;
+    font-size: 70px;;
+
+}
+
+h2{
+    font-family: 'Questrial', sans-serif;
+    margin-top: 10px;
+}
+
+ul{
+    list-style-type: none; 
+    padding: 0; 
+}
+
+.center{
+    text-align: center;
+}
+
+.paragraph{
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+h4{
+    font-family: 'Questrial', sans-serif;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+img{
+    margin-top: 20px;
+    max-height:300px;
+    width:230px;
+}
+

@@ -2,18 +2,25 @@
 {% block title %}User Page{% endblock %}
 
 {% block content %}
-<img src="{{user.image_url}}" alt="{{user.id}}">
-<h2>{{user.first_name}} {{user.last_name}}</h2>
-<p>ID: {{user.id}}</p>
-<button><a href="/{{user.id}}/edit">Edit</a></button>
-<button><a href="/">Go Homepage</a></button>
-
-<h2>Posts</h2>
-<ul>
-    {% for post in posts %}
-    <li><a href="posts/{{post.id}}">{{post.title}}</a></li>
-    {% endfor %}
-</ul>
-<button><a href="/{{user.id}}/addpost">Add Post</a></button>
+<div class="container">
+    <div class="row justify-content-start">
+        <div class="col-4">
+            <img src="{{user.image_url}}" alt="{{user.id}}">
+        </div>
+        <div class="col-4">
+            <h2>{{user.first_name}} {{user.last_name}}</h2>
+            <p>ID: {{user.id}}</p>
+            <a href="/{{user.id}}/edit" class="btn btn-light">Edit</a>
+            <a href="/" class="btn btn-dark">Go Homepage</a>
+            <h2>Posts</h2>
+            <ul>
+                {% for post in posts %}
+                <li><a href="posts/{{post.id}}">{{post.title}}</a></li>
+                {% endfor %}
+            </ul>
+            <a href="/{{user.id}}/addpost" class="btn btn-light">Add Post</a>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
