@@ -53,6 +53,7 @@ def update_cupcake(id):
     cupcake.flavor = request.json.get('flavor', cupcake.flavor)
     cupcake.size = request.json.get('size',  cupcake.size)
     cupcake.rating = request.json.get('rating',  cupcake.rating)
+    cupcake.image = request.json.get('image',  cupcake.image)
     db.session.commit()
     return jsonify(cupcake=cupcake.serialize())
 
@@ -63,6 +64,6 @@ def delete_cupcake(id):
     cupcake = Cupcake.query.get_or_404(id)
     db.session.delete(cupcake)
     db.session.commit()
-    return jsonify(message="deleted")
+    return jsonify(message="Deleted")
 
 
