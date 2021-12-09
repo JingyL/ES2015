@@ -182,20 +182,6 @@ class BinarySearchTree {
         traverse(this.root);
         return res;
 
-        //   let res = [];
-        //   let stack = [this.root];
-        //   while (stack.length > 0){
-        //       let node = stack.pop();
-        //       if (node.right){
-        //           stack.push(node.right);
-        //       }
-        //       if(node.left){
-        //           stack.push(node.left)
-        //       }
-        //       res.push(node.val);
-        //   }
-        //   return res;
-
     }
 
     /** dfsPostOrder(): Traverse the array using post-order DFS.
@@ -223,27 +209,27 @@ class BinarySearchTree {
      * Return an array of visited nodes. */
 
     bfs() {
-        if (!this.root){
-            return 
+        if (!this.root) {
+            return
         }
-          let res = [];
-          let queue= [this.root];
-          while (queue.length > 0){
-              let lvl = [];
-              let l = queue.length
-              for (let i = 0; i < l; i++){
+        let res = [];
+        let queue = [this.root];
+        while (queue.length > 0) {
+            let lvl = [];
+            let l = queue.length
+            for (let i = 0; i < l; i++) {
                 let node = queue.shift();
                 res.push(node.val);
-                if (node.left){
-                  lvl.push(node.left);
+                if (node.left) {
+                    lvl.push(node.left);
                 }
-                if(node.right){
-                  lvl.push(node.right);
-                } 
-              }
-              queue = lvl;
-          }
-          return res;
+                if (node.right) {
+                    lvl.push(node.right);
+                }
+            }
+            queue = lvl;
+        }
+        return res;
 
     }
 
@@ -252,6 +238,47 @@ class BinarySearchTree {
      * Returns the removed node. */
 
     remove(val) {
+        if (!this.root) {
+            return
+        }
+        function findMin(root) {
+            let curr = root;
+            while (curr.left) {
+                curr = curr.left;
+            }
+            return curr;
+        }
+        let res;
+        function removeNode(root, val) {
+            if (!root) {
+                return root;
+            }
+            if (val < root.val) {
+                root.left = removeNode(root.left, val);
+            } else if (val > root.val) {
+                root.right = removeNode(root.right, val);
+            } else {
+                if (!root.left) {
+                    res = root;
+                    let temp = root.right;
+                    root = temp;
+                    return root;
+                }
+                if (!root.right) {
+                    res = root;
+                    let temp = root.left;
+                    root = temp;
+                    return root;
+                }
+                res = root;
+                let temp = findMin(root.right);
+                root.val = temp.val;
+                root.right = removeNode(root.right, temp.val);
+            }
+            return root;
+        }
+        this.root = removeNode(this.root, val);
+        return res;
 
     }
 
@@ -259,7 +286,19 @@ class BinarySearchTree {
      * isBalanced(): Returns true if the BST is balanced, false otherwise. */
 
     isBalanced() {
-
+        function height(node) {
+            if (!node) {
+                return 0;
+            }
+            return Math.max(height(node.left), height(node.right)) + 1;
+        }
+        function helper(node) {
+            if (!node) {
+                return true;
+            }
+            return Math.abs(height(node.right) - height(node.left)) <= 1 && helper(node.right) && helper(node.left);
+        }
+        return helper(this.root);
     }
 
     /** Further Study!
@@ -267,7 +306,85 @@ class BinarySearchTree {
      * Otherwise return undefined. */
 
     findSecondHighest() {
+        function maxLeftValue(node) {
+            let curr = node;
+            while (curr.right) {
+                curr = curr.right;
+            }
+            return curr.val;
+        }
+        function maxRightValue(node) {
+            let pre = node;
+            let curr = node.right;
+            while (curr.right) {
+                curr = curr.right;
+                // pre = curr.right;
+                pre = pre.right;
+            }
+            if (!curr.right && curr.left) {
+                return maxLeftValue(curr.left);
+            }
+            if (!curr.left && !curr.right) {
+                return pre.val;
+                // curr.val;
+            }
+        }
+        if (!this.root) {
+            return;
+        }
+        if (!this.root.left && !this.root.right) {
+            return;
+        }
+        return maxRightValue(this.root);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //     function maxLeftValue(node){
+        //         let curr = node;
+        //         while (curr.right) {
+        //             curr = curr.right;
+        //         };
+        //         return curr.val;
+        //     }
+
+        //     function maxRightValue(node) {
+        //         let pre = node;
+        //         let curr = node.right;
+        //         while (curr.right) {
+        //             curr = curr.right;
+        //             pre = pre.right;
+        //         }
+        //         if (!curr.left) {
+        //             return pre.val;
+        //         }
+        //         else {
+        //             return maxLeftValue(curr.left);
+        //         }
+        //     }
+        //     if (!this.root) {
+        //         return;
+        //     }
+        //     if (!this.root.left && !this.root.right) {
+        //         return ;
+        //     }
+        //     else if (!this.root.right) {
+        //         return maxLeftValue(this.root.left);
+        //     }
+        //     else {
+        //         return maxRightValue(this.root);
+        //     }
     }
 }
 
