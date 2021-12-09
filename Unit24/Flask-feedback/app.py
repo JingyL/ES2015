@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, session, flash
 from flask_debugtoolbar import DebugToolbarExtension
-from models import connect_db, db, User
-from forms import UserForm, LoginForm
+from models import connect_db, db, User, Feedback
+from forms import UserForm, LoginForm, FeedbackForm
 from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
@@ -76,11 +76,96 @@ def logout_user():
     flash("Goodbye!", "info")
     return redirect('/')
 
-@app.route('/users/<username>', )
+@app.route('/users/<username>' )
 def show_profile(username):
     if "username" not in session or username != session['username']:
         flash("Wrong Login", "danger")
         return redirect('/')
-    user = User.query.filter_by(username = username)
+    user = User.query.filter_by(username = username).first()
+    feedback = user.feedback
+    return render_template('profile.html', user=user, feedback=feedback)
 
-    return render_template('profile.html', user=user)
+@app.route("/users/<username>/delete")
+def remove_user(username):
+    """Remove user nad redirect to login."""
+
+    if "username" not in session or username != session['username']:
+        flash("Wrong Login", "danger")
+        return redirect('/')
+
+    user = User.query.filter_by(username = username).first()
+    db.session.delete(user)
+    db.session.commit()
+    session.pop("username")
+    return redirect("/login")
+
+
+
+
+
+
+
+@app.route("/users/<username>/feedback/add", methods=["GET", "POST"])
+def new_feedback(username):
+    """Show add-feedback form and process it."""
+
+    if "username" not in session or username != session['username']:
+        flash("Login First", "danger")
+        return redirect('/')
+
+    form = FeedbackForm()
+
+    if form.validate_on_submit():
+        title = form.title.data
+        content = form.content.data
+        feedback = Feedback(
+            title=title,
+            content=content,
+            username=username,
+        )
+
+        db.session.add(feedback)
+        db.session.commit()
+
+        return redirect(f"/users/{feedback.username}")
+
+    else:
+        return render_template("add-feedback.html", form=form)
+
+
+@app.route("/feedback/<int:feedback_id>/update", methods=["GET", "POST"])
+def update_feedback(feedback_id):
+    """Show update-feedback form and process it."""
+
+    feedback = Feedback.query.get(feedback_id)
+
+    if "username" not in session or feedback.username != session['username']:
+        flash("Login First", "danger")
+        return redirect('/')
+
+    form = FeedbackForm(obj=feedback)
+
+    if form.validate_on_submit():
+        feedback.title = form.title.data
+        feedback.content = form.content.data
+
+        db.session.commit()
+
+        return redirect(f"/users/{feedback.username}")
+
+    return render_template("edit.html", form=form, feedback=feedback)
+
+
+@app.route("/feedback/<int:feedback_id>/delete")
+def delete_feedback(feedback_id):
+    """Delete feedback."""
+
+    feedback = Feedback.query.get(feedback_id)
+    if "username" not in session or feedback.username != session['username']:
+        flash("Login First", "danger")
+        return redirect('/')
+
+    db.session.delete(feedback)
+    db.session.commit()
+
+    return redirect(f"/users/{feedback.username}")
