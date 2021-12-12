@@ -63,18 +63,3 @@ def do_math(operator):
 
     return f"{result}"    
 
-#  str(result)
-# OP = [add, sub, mult, div]
-
-# @app.route('/math/<operator>')
-# def do_math(operator):
-#     """cal a and b parameters."""
-
-#     a = int(request.args["a"])
-#     b = int(request.args["b"])
-#     if operator in OP:
-#         result = operator(a, b)
-#     else:
-#         result = None
-
-#     return f"{result}"

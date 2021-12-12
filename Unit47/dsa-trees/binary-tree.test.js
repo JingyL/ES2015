@@ -157,9 +157,6 @@ describe("serialize and deserialize", function() {
 
     let serialized = BinaryTree.serialize(myTree);
     let result = BinaryTree.deserialize(serialized);
-    console.log(myTree);
-    console.log(serialized);
-    console.log(result);
     expect(result).toEqual(myTree);
   });
 

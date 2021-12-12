@@ -6,6 +6,7 @@ class WordFinder:
     """Machine for finding random words from dictionary.
     
     >>> wf = WordFinder("simple.txt")
+    >>> wf
     3 words read
 
     >>> wf.random() in ["cat", "dog", "porcupine"]
@@ -39,6 +40,7 @@ class SpecialWordFinder(WordFinder):
     """Specialized WordFinder that excludes blank lines/comments.
     
     >>> swf = SpecialWordFinder("complex.txt")
+    >>> swf
     4 words read
 
     >>> swf.random() in ["parsnips", "apple", "kale", "mango"]
