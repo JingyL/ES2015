@@ -24,8 +24,8 @@ class BinaryTree {
     let queue = [this.root];
     while (queue.length){
         // why do we need to define l first?
-        let l = queue.length
-        for (let i = 0; i < l; i++){
+        // let l = queue.length
+        for (let i = 0; i < queue.length; i++){
             let node = queue.shift();
             if (node.right || node.left){
                 if (node.right){
@@ -152,7 +152,6 @@ class BinaryTree {
     }
     serializehelper(tree.root);
     let str = res.join('');
-    console.log(str)
     return str;
   }
 
@@ -199,7 +198,6 @@ class BinaryTree {
   }
 
   let root = deserializehelper();
-  console.log(root)
 
   return new BinaryTree(root);
 }

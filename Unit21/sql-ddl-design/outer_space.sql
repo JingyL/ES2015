@@ -95,6 +95,7 @@ VALUES
   ('Proxima Centauri b', 0.03, 2, 1),
   ('Gliese 876 b', 0.23, 3, 1);
 
+
 -- PlanetID, Moons
 
 

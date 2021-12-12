@@ -318,7 +318,6 @@ class BinarySearchTree {
             let curr = node.right;
             while (curr.right) {
                 curr = curr.right;
-                // pre = curr.right;
                 pre = pre.right;
             }
             if (!curr.right && curr.left) {
@@ -326,7 +325,6 @@ class BinarySearchTree {
             }
             if (!curr.left && !curr.right) {
                 return pre.val;
-                // curr.val;
             }
         }
         if (!this.root) {
