@@ -37,51 +37,61 @@ class Graph {
 
   // this function accepts a vertex and removes it from the nodes property, it also updates any adjacency lists that include that vertex
   removeVertex(vertex) {
-      for (let a of vertex.adjacent){
-        vertex.adjacent.delete(a);
-      }
-      for (let n of this.nodes){
-          for (let a of n.adjacent){
-              if (vertex in a){
-                  a.delete(vertex);
-              }
-          }
+    //   for (let n of this.nodes){
+    //       if (n.adjacent.has(vertex)){
+    //         removeEdge(n, vertext)
+    //       }
+    //   }
+    //   this.nodes.delete(vertex);
+
+    for (let node of this.nodes) {
+        if (node.adjacent.has(vertex)) {
+          node.adjacent.delete(vertex);
+        }
       }
       this.nodes.delete(vertex);
   }
 
   // this function returns an array of Node values using DFS
   depthFirstSearch(start) {
+    const visited = new Set();
     let res = [];
     let stack = [start];
-    while (stack.length !== 0){
+    visited.add(start);
+    while (stack.length){
         let vertex = stack.pop();
         for (let v of vertex.adjacent){
-            stack.push(v);
+            if (!visited.has(v)){
+                stack.push(v);
+                visited.add(v);
+            }
         }
-        res.push(vertex);
+        res.push(vertex.value);
     }
     return res;
+
   }
 
   // this function returns an array of Node values using BFS
   breadthFirstSearch(start) {
     let res = [];
     let queue = [start];
+    const visited = new Set();
+    visited.add(start);
     while (queue.length !== 0){
-        lvl = []
-        for (let vertex of queue){
-            let v = vertext.shift();
+        let v = queue.shift();
             for (let a of v.adjacent){
-                lvl.push(a)
+                if (! visited.has(a)){
+                    queue.push(a);
+                    visited.add(a);
+                }
             }    
-            res.push(v);
+        res.push(v.value);
         }
-        res.push(lvl)
-    }
     return res;
+
   }
-  }
+
 }
 
 module.exports = {Graph, Node}
