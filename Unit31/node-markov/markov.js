@@ -21,12 +21,24 @@ class MarkovMachine {
   makeChains() {
     // TODO
     let dict = {}
-    for (let i = 0; i < this.words.length - 2; i++){
-        if (!dict.hasOwnProperty(this.words[i])){
-            dict[this.words[i]] = [this.words[i + 1] || null]
+    let i;
+    for (i = 0; i < this.words.length; i++){
+        if (i === this.words.length - 1){
+            if (!dict.hasOwnProperty(this.words[i])){
+                dict[this.words[i]] = [null]
+            }else{
+                if (!dict[this.words[i]].includes(this.words[i + 1])){
+                 
+                    dict[this.words[i]].push(null)
+                }
+            }
         }else{
-            if (!dict[this.words[i]].includes(this.words[i + 1])){
-                dict[this.words[i]].push(this.words[i + 1] || null)
+            if (!dict.hasOwnProperty(this.words[i])){
+                dict[this.words[i]] = [this.words[i + 1]]
+            }else{
+                if (!dict[this.words[i]].includes(this.words[i + 1])){
+                    dict[this.words[i]].push(this.words[i + 1])
+                }
             }
         }
     }
