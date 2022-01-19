@@ -35,4 +35,7 @@ async function getUsers() {
 }
 ```
 
+1. We can use Promise.all to get all the info at the same time and then extract values.
+2. elie, joel and matt, those names are promise values. So it's better change to the exact result that we want to get such as elie.bio and etc.
+
 
