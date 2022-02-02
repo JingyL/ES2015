@@ -18,13 +18,11 @@ const { authenticateJWT, ensureLoggedIn, ensureCorrectUser } = require("../middl
  */
  router.post('/register', async (req, res, next) => {
     try{
-        const { username, password, first_name, last_name, phone } = req.body;
-        if (!username || !password || !first_name || !last_name || !phone) {
-          throw new ExpressError("All info required", 400);
-        }
-        let result = await User.register(username, password, first_name, last_name, phone )
-        let token = jwt.sign(result.username, SECRET_KEY);
-        User.updateLoginTimestamp(User);
+        // let result = await User.register(req.body)
+        // let token = jwt.sign(result.username, SECRET_KEY);
+        let {username} = await User.register(req.body)
+        let token = jwt.sign({username}, SECRET_KEY);
+        User.updateLoginTimestamp(username);
         return res.json({token});
     }catch(e){
         return next(e)

@@ -105,7 +105,7 @@ describe("Test messages part of User class", function () {
 
   test('can get messages from user', async function () {
     let m = await User.messagesFrom("test1");
-    expect(m).toEqual([{
+    expect(m).toMatchObject([{
       id: expect.any(Number),
       body: "u1-to-u2",
       sent_at: expect.any(Date),
