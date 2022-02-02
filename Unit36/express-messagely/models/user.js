@@ -116,7 +116,7 @@ class User {
        WHERE m.from_username = $1`,
       [username]);
 
-    return [results.rows.map(d => (
+    return results.rows.map(d => (
       {
         "id": d.id,
         "to_user": {
@@ -126,12 +126,12 @@ class User {
           "phone": d.phone
         },
         "body": d.body,
-        "send_at": d.sent_at,
+        "sent_at": d.sent_at,
         "read_at": d.read_at
       }
     )
     )
-    ]
+    
   }
 
   /** Return messages to this user.
@@ -152,7 +152,7 @@ class User {
        WHERE m.to_username = $1`,
       [username]);
 
-    return [results.rows.map(d => (
+    return results.rows.map(d => (
       {
         "id": d.id,
         "from_user": {
@@ -162,12 +162,12 @@ class User {
           "phone": d.phone
         },
         "body": d.body,
-        "send_at": d.sent_at,
+        "sent_at": d.sent_at,
         "read_at": d.read_at
       }
     )
     )
-    ]
+    
   }
 }
 
