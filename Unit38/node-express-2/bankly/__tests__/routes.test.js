@@ -100,10 +100,10 @@ describe("POST /auth/login", function() {
         password: "pwd1"
       });
     expect(response.statusCode).toBe(401);
-    expect(response.body).toEqual({
-        status: 401,
-        message: 'Cannot authenticate'});
+    expect(response.body).toEqual({  status: 401, message:'Cannot authenticate'});
+
   });
+
 
 
 });
