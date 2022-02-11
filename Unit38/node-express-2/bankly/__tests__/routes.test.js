@@ -73,6 +73,19 @@ describe("POST /auth/register", function() {
       message: `There already exists a user with username 'u1'`
     });
   });
+
+  test("should not allow a user to register with missing field", async function() {
+    const response = await request(app)
+      .post("/auth/register")
+      .send({
+        username: "u1",
+        first_name: "new_first",
+        last_name: "new_last",
+        email: "new@newuser.com",
+        phone: "1233211221"
+      });
+    expect(response.statusCode).toBe(400);
+  });
 });
 
 describe("POST /auth/login", function() {
@@ -91,7 +104,7 @@ describe("POST /auth/login", function() {
     expect(admin).toBe(false);
   });
 
-
+  // TESTS BUG #1 
   test("should not allow a wrong username/password to log in", async function() {
     const response = await request(app)
       .post("/auth/login")
@@ -104,7 +117,16 @@ describe("POST /auth/login", function() {
 
   });
 
+  test("should not allow missing field to log in", async function() {
+    const response = await request(app)
+      .post("/auth/login")
+      .send({
+        password: "pwd1"
+      });
+    expect(response.statusCode).toBe(401);
+    expect(response.body).toEqual({  status: 401, message:'Cannot authenticate'});
 
+  });
 
 });
 
@@ -114,13 +136,76 @@ describe("GET /users", function() {
     expect(response.statusCode).toBe(401);
   });
 
-  test("should list all users", async function() {
+  test("should list all users for log in users", async function() {
     const response = await request(app)
       .get("/users")
       .send({ _token: tokens.u1 });
     expect(response.statusCode).toBe(200);
     expect(response.body.users.length).toBe(3);
+    expect(response.body.users).toEqual([
+        {
+          username: 'u1',
+          first_name: 'fn1',
+          last_name: 'ln1',
+          email: 'email1',
+          phone: 'phone1'
+        },
+        {
+          username: 'u2',
+          first_name: 'fn2',
+          last_name: 'ln2',
+          email: 'email2',
+          phone: 'phone2'
+        },
+        {
+          username: 'u3',
+          first_name: 'fn3',
+          last_name: 'ln3',
+          email: 'email3',
+          phone: 'phone3'
+        }
+      ]);
   });
+
+  test("should list all users if admin", async function() {
+    const response = await request(app)
+      .get("/users")
+      .send({ _token: tokens.u3  });
+    expect(response.statusCode).toBe(200);
+    expect(response.body.users.length).toBe(3);
+    expect(response.body.users).toEqual([
+        {
+          username: 'u1',
+          first_name: 'fn1',
+          last_name: 'ln1',
+          email: 'email1',
+          phone: 'phone1'
+        },
+        {
+          username: 'u2',
+          first_name: 'fn2',
+          last_name: 'ln2',
+          email: 'email2',
+          phone: 'phone2'
+        },
+        {
+          username: 'u3',
+          first_name: 'fn3',
+          last_name: 'ln3',
+          email: 'email3',
+          phone: 'phone3'
+        }
+      ]);
+  });
+
+  test("should not list all users if not auth", async function() {
+    const response = await request(app)
+      .get("/users")
+      .send({ _token: "None" });
+    expect(response.statusCode).toBe(401);
+  });
+
+
 });
 
 describe("GET /users/[username]", function() {
@@ -141,6 +226,21 @@ describe("GET /users/[username]", function() {
       email: "email1",
       phone: "phone1"
     });
+  });
+
+  test("should not return data on u1", async function() {
+    const response = await request(app)
+      .get("/users/u1")
+      .send({ _token: "None"});
+    expect(response.statusCode).toBe(401);
+  });
+
+ //   TESTS BUG #3
+  test("should not return data if non-existed user", async function() {
+    const response = await request(app)
+      .get("/users/44")
+      .send({ _token: tokens.u1 });
+    expect(response.statusCode).toBe(404);
   });
 });
 
@@ -207,6 +307,21 @@ describe("DELETE /users/[username]", function() {
       .send({ _token: tokens.u3 }); // u3 is admin
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({ message: "deleted" });
+  });
+
+  test("should not allow if wrong token", async function() {
+    const response = await request(app)
+      .delete("/users/u1")
+      .send({ _token: "sfhdsgf" }); 
+    expect(response.statusCode).toBe(401);
+  });
+
+//   TESTS BUG #2
+  test("should not work with non-existed username", async function() {
+    const response = await request(app)
+      .delete("/users/44")
+      .send({ _token: tokens.u3 }); 
+    expect(response.statusCode).toBe(404);
   });
 });
 

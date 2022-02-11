@@ -100,11 +100,13 @@ router.delete('/:username', authUser, requireAdmin, async function(
   next
 ) {
   try {
-    User.delete(req.params.username);
+//   FIXES BUG #2
+    await User.delete(req.params.username);
     return res.json({ message: 'deleted' });
   } catch (err) {
     return next(err);
   }
 }); // end
+
 
 module.exports = router;

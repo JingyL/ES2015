@@ -13,7 +13,6 @@ function requireLogin(req, res, next) {
       return next({ status: 401, message: 'Unauthorized' });
     }
   } catch (err) {
-      console.log(err)
     return next(err);
   }
 }
