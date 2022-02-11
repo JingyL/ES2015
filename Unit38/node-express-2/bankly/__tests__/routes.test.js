@@ -139,7 +139,7 @@ describe("GET /users", function() {
   test("should list all users for log in users", async function() {
     const response = await request(app)
       .get("/users")
-      .send({ _token: tokens.u1 });
+      .send({ _token: tokens.u1});
     expect(response.statusCode).toBe(200);
     expect(response.body.users.length).toBe(3);
     expect(response.body.users).toEqual([
@@ -204,7 +204,6 @@ describe("GET /users", function() {
       .send({ _token: "None" });
     expect(response.statusCode).toBe(401);
   });
-
 
 });
 
