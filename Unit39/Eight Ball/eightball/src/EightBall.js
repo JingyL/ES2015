@@ -15,12 +15,19 @@ function EightBall(props){
         setMsg(msg);
         setColor(color);
     }
+    function reset(){
+        setMsg("Think of a Question.");
+        setColor("black");
+    }
     return (
+        <>
         <div className="ball"
         onClick={handleClick}
         style = {{ backgroundColor: color }}>
             <b>{msg}</b>
         </div>
+        <button onClick={reset} >reset</button>
+        </>
     )
 }
 
